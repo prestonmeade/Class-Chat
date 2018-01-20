@@ -1,5 +1,7 @@
 #!/bin/bash
 checkChat &
+
+#change to path of chat.txt on the server. Make sure everyone has access
 outputFile="/home/ugrads/meade/shared/output.txt";
 
 if [ $# -eq 0 ]
@@ -13,7 +15,7 @@ fi
 
 hasUsername=false;
 username="$USER";
-if [ $1 == "-con" ] 
+if [ $1 == "-con" ]
 	then
 
 		if [ $# -gt 1 ]
@@ -22,18 +24,20 @@ if [ $1 == "-con" ]
 			username="$2";
 			echo $username;
 			fi
-		echo "--Mode: Continous Connection--";	
+		echo "--Mode: Continous Connection--";
 		echo "--Commands: 'exit' -----------";
 		input="run";
-	
 			echo "~~~$username has joined: $(date +"%H:%M")~~~" >> $outputFile;
 
 		inChat=true;
 		while [ inChat ]
 			do
-			IFS= read -r -p "Enter Message: " input;
+			IFS= read -r  input;
 		case "$input" in *exit*)
-			echo "---$username has logged off: $(date +"%H:%M")---" >> $outputFile;
+		pkill tail;
+		pkill checkChat;
+		pkill chat;
+echo "---$username has logged off: $(date +"%H:%M")---" >> $outputFile;
 			exit;
 		;;
 		esac
@@ -43,4 +47,3 @@ if [ $1 == "-con" ]
 		then
 			echo "$(date +"%H:%M") $username: $1 " >> $outputFile
 	fi
-
