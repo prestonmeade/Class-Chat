@@ -1,0 +1,12 @@
+#!/bin/bash
+#Preston Meade
+#Basic Chat Program
+#This is the reader of the chat program, displays any new lines in the chat
+
+oldLines=0;
+
+		newLines="$(wc -l < /home/ugrads/meade/shared/output.txt)";
+		linesToAdd=$(($newLines - $oldLines));
+ tail -fn $linesToAdd  /home/ugrads/meade/shared/output.txt 
+		
+	

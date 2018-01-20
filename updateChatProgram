@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Updating...";
+echo "Directory changed to shared folder";
+
+cd /home/ugrads/meade/shared/
+echo "Copied updated files to ~/bin"
+cp chat $HOME/bin
+
+cp checkChat $HOME/bin
+cd $HOME
+echo "Files added! Chat program has been updated";

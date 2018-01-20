@@ -1,0 +1,50 @@
+#!/bin/bash
+
+checkChat &
+
+outputFile="/home/ugrads/meade/shared/output.txt";
+
+if [ $# -eq 0 ]
+	then
+		echo "Must enter -con or a message";
+		echo "Example: chat -con";
+		echo "Example: chat HI";
+		echo "Example: chat \"Long message, I am Dave\"";
+	exit
+fi
+
+hasUsername=false;
+username="$USER";
+if [ $1 == "-con" ] 
+	then
+
+		if [ $# -gt 1 ]
+		then
+			hasUsername=true;
+			username="$2";
+			echo $username;
+			fi
+		echo "--Mode: Continous Connection--";	
+		echo "--Commands: 'exit' -----------";
+		input="run";
+			echo "~~~$username has joined: $(date +"%H:%M")~~~" >> $outputFile;
+
+		inChat=true;
+		while [ inChat ]
+			do
+			IFS= read -r  input;
+		case "$input" in *exit*)
+		pkill tail;
+		pkill checkChat;
+		pkill chat;
+echo "---$username has logged off: $(date +"%H:%M")---" >> $outputFile;
+			exit;
+		;;
+		esac
+			echo "$(date +"%H:%M") $username: $input" >> $outputFile
+		done
+	elif [ $# -gt 0 ]
+		then
+			echo "$(date +"%H:%M") $username: $1 " >> $outputFile
+	fi
+
